@@ -589,7 +589,9 @@ export default function Home() {
     return d;
   }, [state.moveOutDate]);
 
-  const isEditable = isWithinMoveInEditWindow;
+  const moveInWindowActive = isWithinMoveInEditWindow;
+  const moveOutWindowActive = isWithinMoveOutWindow;
+  const isEditable = true;
   const canSubmitFinalPdf = hasAnyMoveInPhoto && isProfileComplete;
 
   async function generateInspectionPdfBytes() {
@@ -1719,9 +1721,17 @@ export default function Home() {
                                           Move-in
                                         </p>
                                       </div>
-                                      {isWithinMoveInEditWindow ? (
-                                        <label className="inline-flex cursor-pointer items-center justify-center rounded-full bg-emerald-700 px-2.5 py-0.5 text-[10px] font-medium text-white hover:bg-emerald-800">
-                                          Take photo / video
+                                      <div className="flex flex-col items-end text-right">
+                                        <label
+                                          className={`inline-flex cursor-pointer items-center justify-center rounded-full px-2.5 py-0.5 text-[10px] font-medium text-white ${
+                                            moveInWindowActive
+                                              ? "bg-emerald-700 hover:bg-emerald-800"
+                                              : "bg-emerald-600/80 hover:bg-emerald-600"
+                                          }`}
+                                        >
+                                          {moveInWindowActive
+                                            ? "Take photo / video"
+                                            : "Add photo / video"}
                                           <input
                                             type="file"
                                             accept="image/*,video/*"
@@ -1736,11 +1746,12 @@ export default function Home() {
                                             }
                                           />
                                         </label>
-                                      ) : (
-                                        <span className="rounded-full bg-slate-200 px-2.5 py-0.5 text-[10px] font-medium text-slate-500">
-                                          Locked
-                                        </span>
-                                      )}
+                                        {!moveInWindowActive && (
+                                          <span className="mt-0.5 text-[9px] font-medium text-amber-700">
+                                            Window ended, but uploads remain open so you can finish.
+                                          </span>
+                                        )}
+                                      </div>
                                     </div>
                                     {item.moveInPhotos.length === 0 ? (
                                       <p className="text-[10px] text-slate-500">
@@ -1780,33 +1791,31 @@ export default function Home() {
                                                   photo.addedAt
                                                 )}
                                             </figcaption>
-                                            {isWithinMoveInEditWindow && (
-                                              <button
-                                                type="button"
-                                                onClick={() => {
-                                                  setState((prev) => ({
-                                                    ...prev,
-                                                    items: prev.items.map(
-                                                      (pItem) =>
-                                                        pItem.id === item.id
-                                                          ? {
-                                                              ...pItem,
-                                                              moveInPhotos:
-                                                                pItem.moveInPhotos.filter(
-                                                                  (p) =>
-                                                                    p.id !==
-                                                                    photo.id
-                                                                ),
-                                                            }
-                                                          : pItem
-                                                    ),
-                                                  }));
-                                                }}
-                                            className="absolute right-0 top-0 m-0.5 rounded-full bg-white/80 px-1 text-[9px] text-slate-600 hover:bg-red-500 hover:text-white"
-                                              >
-                                                ✕
-                                              </button>
-                                            )}
+                                            <button
+                                              type="button"
+                                              onClick={() => {
+                                                setState((prev) => ({
+                                                  ...prev,
+                                                  items: prev.items.map(
+                                                    (pItem) =>
+                                                      pItem.id === item.id
+                                                        ? {
+                                                            ...pItem,
+                                                            moveInPhotos:
+                                                              pItem.moveInPhotos.filter(
+                                                                (p) =>
+                                                                  p.id !==
+                                                                  photo.id
+                                                              ),
+                                                          }
+                                                        : pItem
+                                                  ),
+                                                }));
+                                              }}
+                                              className="absolute right-0 top-0 m-0.5 rounded-full bg-white/80 px-1 text-[9px] text-slate-600 hover:bg-red-500 hover:text-white"
+                                            >
+                                              ✕
+                                            </button>
                                           </figure>
                                         ))}
         </div>
@@ -1820,9 +1829,17 @@ export default function Home() {
                                           Move-out
                                         </p>
                                       </div>
-                                      {isWithinMoveOutWindow ? (
-                                        <label className="inline-flex cursor-pointer items-center justify-center rounded-full bg-sky-700 px-2.5 py-0.5 text-[10px] font-medium text-white hover:bg-sky-800">
-                                          Take photo / video
+                                      <div className="flex flex-col items-end text-right">
+                                        <label
+                                          className={`inline-flex cursor-pointer items-center justify-center rounded-full px-2.5 py-0.5 text-[10px] font-medium text-white ${
+                                            moveOutWindowActive
+                                              ? "bg-sky-700 hover:bg-sky-800"
+                                              : "bg-sky-600/80 hover:bg-sky-600"
+                                          }`}
+                                        >
+                                          {moveOutWindowActive
+                                            ? "Take photo / video"
+                                            : "Add photo / video"}
                                           <input
                                             type="file"
                                             accept="image/*,video/*"
@@ -1837,11 +1854,12 @@ export default function Home() {
                                             }
                                           />
                                         </label>
-                                      ) : (
-                                        <span className="rounded-full bg-slate-200 px-2.5 py-0.5 text-[10px] font-medium text-slate-500">
-                                          Locked
-                                        </span>
-                                      )}
+                                        {!moveOutWindowActive && (
+                                          <span className="mt-0.5 text-[9px] font-medium text-amber-700">
+                                            Outside the move-out window—uploads still allowed for flexibility.
+                                          </span>
+                                        )}
+                                      </div>
                                     </div>
                                     {item.moveOutPhotos.length === 0 ? (
                                       <p className="text-[10px] text-slate-500">
@@ -1881,33 +1899,31 @@ export default function Home() {
                                                   photo.addedAt
                                                 )}
                                             </figcaption>
-                                            {isWithinMoveOutWindow && (
-                                              <button
-                                                type="button"
-                                                onClick={() => {
-                                                  setState((prev) => ({
-                                                    ...prev,
-                                                    items: prev.items.map(
-                                                      (pItem) =>
-                                                        pItem.id === item.id
-                                                          ? {
-                                                              ...pItem,
-                                                              moveOutPhotos:
-                                                                pItem.moveOutPhotos.filter(
-                                                                  (p) =>
-                                                                    p.id !==
-                                                                    photo.id
-                                                                ),
-                                                            }
-                                                          : pItem
-                                                    ),
-                                                  }));
-                                                }}
-                                                className="absolute right-0 top-0 m-0.5 rounded-full bg-white/80 px-1 text-[9px] text-slate-600 hover:bg-red-500 hover:text-white"
-                                              >
-                                                ✕
-                                              </button>
-                                            )}
+                                            <button
+                                              type="button"
+                                              onClick={() => {
+                                                setState((prev) => ({
+                                                  ...prev,
+                                                  items: prev.items.map(
+                                                    (pItem) =>
+                                                      pItem.id === item.id
+                                                        ? {
+                                                            ...pItem,
+                                                            moveOutPhotos:
+                                                              pItem.moveOutPhotos.filter(
+                                                                (p) =>
+                                                                  p.id !==
+                                                                  photo.id
+                                                              ),
+                                                          }
+                                                        : pItem
+                                                  ),
+                                                }));
+                                              }}
+                                              className="absolute right-0 top-0 m-0.5 rounded-full bg-white/80 px-1 text-[9px] text-slate-600 hover:bg-red-500 hover:text-white"
+                                            >
+                                              ✕
+                                            </button>
                                           </figure>
                                         ))}
                                       </div>
@@ -1979,9 +1995,17 @@ export default function Home() {
                                       Move-in
                                     </p>
                                   </div>
-                                  {isWithinMoveInEditWindow ? (
-                                    <label className="inline-flex cursor-pointer items-center justify-center rounded-full bg-emerald-700 px-2.5 py-0.5 text-[10px] font-medium text-white hover:bg-emerald-800">
-                                      Take photo / video
+                                  <div className="flex flex-col items-end text-right">
+                                    <label
+                                      className={`inline-flex cursor-pointer items-center justify-center rounded-full px-2.5 py-0.5 text-[10px] font-medium text-white ${
+                                        moveInWindowActive
+                                          ? "bg-emerald-700 hover:bg-emerald-800"
+                                          : "bg-emerald-600/80 hover:bg-emerald-600"
+                                      }`}
+                                    >
+                                      {moveInWindowActive
+                                        ? "Take photo / video"
+                                        : "Add photo / video"}
                                       <input
                                         type="file"
                                         accept="image/*,video/*"
@@ -1996,11 +2020,12 @@ export default function Home() {
                                         }
                                       />
                                     </label>
-                                  ) : (
-                                    <span className="rounded-full bg-slate-200 px-2.5 py-0.5 text-[10px] font-medium text-slate-500">
-                                      Locked
-                                    </span>
-                                  )}
+                                    {!moveInWindowActive && (
+                                      <span className="mt-0.5 text-[9px] font-medium text-amber-700">
+                                        Window ended, but uploads remain open so you can finish.
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
                                 {item.moveInPhotos.length === 0 ? (
                                   <p className="text-[10px] text-slate-500">
@@ -2038,33 +2063,30 @@ export default function Home() {
                                           {photo.capturedLabel ??
                                             formatDateTimeLabel(photo.addedAt)}
                                         </figcaption>
-                                        {isWithinMoveInEditWindow && (
-                                          <button
-                                            type="button"
-                                            onClick={() => {
-                                              setState((prev) => ({
-                                                ...prev,
-                                                items: prev.items.map(
-                                                  (pItem) =>
-                                                    pItem.id === item.id
-                                                      ? {
-                                                          ...pItem,
-                                                          moveInPhotos:
-                                                            pItem.moveInPhotos.filter(
-                                                              (p) =>
-                                                                p.id !==
-                                                                photo.id
-                                                            ),
-                                                        }
-                                                      : pItem
-                                                ),
-                                              }));
-                                            }}
-                                            className="absolute right-0 top-0 m-0.5 rounded-full bg-white/80 px-1 text-[9px] text-slate-600 hover:bg-red-500 hover:text-white"
-                                          >
-                                            ✕
-                                          </button>
-                                        )}
+                                        <button
+                                          type="button"
+                                          onClick={() => {
+                                            setState((prev) => ({
+                                              ...prev,
+                                              items: prev.items.map(
+                                                (pItem) =>
+                                                  pItem.id === item.id
+                                                    ? {
+                                                        ...pItem,
+                                                        moveInPhotos:
+                                                          pItem.moveInPhotos.filter(
+                                                            (p) =>
+                                                              p.id !== photo.id
+                                                          ),
+                                                      }
+                                                    : pItem
+                                              ),
+                                            }));
+                                          }}
+                                          className="absolute right-0 top-0 m-0.5 rounded-full bg-white/80 px-1 text-[9px] text-slate-600 hover:bg-red-500 hover:text-white"
+                                        >
+                                          ✕
+                                        </button>
                                       </figure>
                                     ))}
                                   </div>
@@ -2078,9 +2100,17 @@ export default function Home() {
                                       Move-out
           </p>
         </div>
-                                  {isWithinMoveOutWindow ? (
-                                    <label className="inline-flex cursor-pointer items-center justify-center rounded-full bg-sky-700 px-2.5 py-0.5 text-[10px] font-medium text-white hover:bg-sky-800">
-                                      Take photo / video
+                                  <div className="flex flex-col items-end text-right">
+                                    <label
+                                      className={`inline-flex cursor-pointer items-center justify-center rounded-full px-2.5 py-0.5 text-[10px] font-medium text-white ${
+                                        moveOutWindowActive
+                                          ? "bg-sky-700 hover:bg-sky-800"
+                                          : "bg-sky-600/80 hover:bg-sky-600"
+                                      }`}
+                                    >
+                                      {moveOutWindowActive
+                                        ? "Take photo / video"
+                                        : "Add photo / video"}
                                       <input
                                         type="file"
                                         accept="image/*,video/*"
@@ -2095,11 +2125,12 @@ export default function Home() {
                                         }
                                       />
                                     </label>
-                                  ) : (
-                                    <span className="rounded-full bg-slate-200 px-2.5 py-0.5 text-[10px] font-medium text-slate-500">
-                                      Locked
-                                    </span>
-                                  )}
+                                    {!moveOutWindowActive && (
+                                      <span className="mt-0.5 text-[9px] font-medium text-amber-700">
+                                        Outside the move-out window—uploads still allowed for flexibility.
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
                                 {item.moveOutPhotos.length === 0 ? (
                                   <p className="text-[10px] text-slate-500">
@@ -2137,33 +2168,30 @@ export default function Home() {
                                           {photo.capturedLabel ??
                                             formatDateTimeLabel(photo.addedAt)}
                                         </figcaption>
-                                        {isWithinMoveOutWindow && (
-                                          <button
-                                            type="button"
-                                            onClick={() => {
-                                              setState((prev) => ({
-                                                ...prev,
-                                                items: prev.items.map(
-                                                  (pItem) =>
-                                                    pItem.id === item.id
-                                                      ? {
-                                                          ...pItem,
-                                                          moveOutPhotos:
-                                                            pItem.moveOutPhotos.filter(
-                                                              (p) =>
-                                                                p.id !==
-                                                                photo.id
-                                                            ),
-                                                        }
-                                                      : pItem
-                                                ),
-                                              }));
-                                            }}
-                                            className="absolute right-0 top-0 m-0.5 rounded-full bg-white/80 px-1 text-[9px] text-slate-600 hover:bg-red-500 hover:text-white"
-                                          >
-                                            ✕
-                                          </button>
-                                        )}
+                                        <button
+                                          type="button"
+                                          onClick={() => {
+                                            setState((prev) => ({
+                                              ...prev,
+                                              items: prev.items.map(
+                                                (pItem) =>
+                                                  pItem.id === item.id
+                                                    ? {
+                                                        ...pItem,
+                                                        moveOutPhotos:
+                                                          pItem.moveOutPhotos.filter(
+                                                            (p) =>
+                                                              p.id !== photo.id
+                                                          ),
+                                                      }
+                                                    : pItem
+                                              ),
+                                            }));
+                                          }}
+                                          className="absolute right-0 top-0 m-0.5 rounded-full bg-white/80 px-1 text-[9px] text-slate-600 hover:bg-red-500 hover:text-white"
+                                        >
+                                          ✕
+                                        </button>
                                       </figure>
                                     ))}
                                   </div>
