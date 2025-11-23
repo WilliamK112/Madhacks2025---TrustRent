@@ -590,8 +590,7 @@ export default function Home() {
   }, [state.moveOutDate]);
 
   const isEditable = isWithinMoveInEditWindow;
-  const canSubmitFinalPdf =
-    hasAnyMoveInPhoto && isProfileComplete && isWithinMoveInEditWindow;
+  const canSubmitFinalPdf = hasAnyMoveInPhoto && isProfileComplete;
 
   async function generateInspectionPdfBytes() {
       const pdfDoc = await PDFDocument.create();
@@ -801,15 +800,7 @@ export default function Home() {
     if (!state.moveInDate) {
       setSubmissionFeedback({
         type: "error",
-        message: "Please set your move-in date so we can honor the 7-day window.",
-      });
-      return;
-    }
-    if (!isWithinMoveInEditWindow) {
-      setSubmissionFeedback({
-        type: "error",
-        message:
-          "The 7-day move-in window has ended. Contact support if you still need to update your report.",
+        message: "Please set your move-in date before submitting your report.",
       });
       return;
     }
