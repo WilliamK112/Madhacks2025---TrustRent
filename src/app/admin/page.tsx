@@ -398,7 +398,7 @@ export default function AdminPage() {
                                 <p className="text-slate-600">
                                   <strong>Renter instructions:</strong> Go to{" "}
                                   <span className="font-mono text-emerald-600">
-                                    clearmove.app/access
+                                    https://trustrent-qq9v.onrender.com/access
                                   </span>{" "}
                                   and enter token{" "}
                                   <span className="font-mono font-bold">

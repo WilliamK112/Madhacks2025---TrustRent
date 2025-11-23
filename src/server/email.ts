@@ -49,7 +49,7 @@ export async function sendInvitationEmail(
       
       <p><strong>How to use your token:</strong></p>
       <ol style="line-height: 1.8;">
-        <li>Go to <strong>trustrent.app/access</strong></li>
+        <li>Go to <strong>https://trustrent-qq9v.onrender.com/access</strong></li>
         <li>Enter your token: <strong>${payload.accessToken}</strong></li>
         <li>Create your account and document your unit condition</li>
       </ol>
