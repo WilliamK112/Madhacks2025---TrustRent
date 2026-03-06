@@ -1,11 +1,44 @@
 ## TrustRent – Evidence-First Move‑In Inspections for Renters and Property Managers
 
+<p align="center">
+  <img src="./public/Trust2-removebg-preview.png" alt="TrustRent Logo" width="320" />
+</p>
+
 TrustRent is a production‑ready web app that helps renters **prove the true condition of their unit** and helps property managers **standardize move‑in inspections** across entire portfolios.
 
 Renters use a guided checklist, photos, and AI‑assisted lease analysis to create a defensible inspection report. Property managers invite renters via email, track participation, and access submitted PDFs for every unit.
 
 ---
 Languages used: TypeScript, JavaScript, CSS, and SQL (plus Markdown/JSON for docs and config).
+
+## 🎬 Demo
+
+- YouTube Demo: https://www.youtube.com/watch?v=v-siVBMejZY
+
+## 📂 Project Structure
+
+```txt
+.
+├── src/
+│   ├── app/
+│   │   ├── admin/
+│   │   ├── api/
+│   │   ├── app/
+│   │   ├── access/
+│   │   ├── register/
+│   │   └── renter/
+│   └── server/
+│       ├── db/
+│       └── ...
+├── public/
+│   ├── Trust2-removebg-preview.png
+│   └── ...
+├── LeaseAdvisor/
+├── rent-consultant/
+├── README.md
+├── package.json
+└── tsconfig.json
+```
 
 ### 🎯 What Problem Does TrustRent Solve?
 
