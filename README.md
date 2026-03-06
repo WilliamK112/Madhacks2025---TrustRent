@@ -5,6 +5,7 @@ TrustRent is a production‑ready web app that helps renters **prove the true co
 Renters use a guided checklist, photos, and AI‑assisted lease analysis to create a defensible inspection report. Property managers invite renters via email, track participation, and access submitted PDFs for every unit.
 
 ---
+Languages used: TypeScript, JavaScript, CSS, and SQL (plus Markdown/JSON for docs and config).
 
 ### 🎯 What Problem Does TrustRent Solve?
 
