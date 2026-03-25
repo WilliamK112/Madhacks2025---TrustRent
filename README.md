@@ -7,7 +7,7 @@
 TrustRent is a production‑ready web app that helps renters **prove the true condition of their unit** and helps property managers **standardize move‑in inspections** across entire portfolios.
 
 Renters use a guided checklist, photos, and AI‑assisted lease analysis to create a defensible inspection report. Property managers invite renters via email, track participation, and access submitted PDFs for every unit.
-
+Live app: https://madhacks2025-trustrent.vercel.app/
 ---
 Languages used: TypeScript, JavaScript, CSS, and SQL (plus Markdown/JSON for docs and config).
 
